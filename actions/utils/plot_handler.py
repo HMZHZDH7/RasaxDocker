@@ -20,8 +20,8 @@ class PlotHandler:
         self._save = save_plot
         self.json_file_path = "actions/utils/plot_args.json"
         self.json_data_path = "actions/utils/data.json"
-        self.website_url = "http://localhost:3000/rasa-webhook"
-        #self.website_url = "https://dashboards.create.aau.dk/rasa-webhook"
+        #self.website_url = "http://localhost:3000/rasa-webhook"
+        self.website_url = "https://dashboards.create.aau.dk/rasa-webhook"
         self.data = pd.read_csv("actions/utils/dataREanonymized_long.csv")
 
     def change_arg(self, arg, value):

@@ -2,7 +2,7 @@
   "visualization": {
     "type": "line",
     "title": "",
-    "variable": "age",
+    "variable": "door_to_needle",
     "data": {
       "x": "",
       "y": "",
