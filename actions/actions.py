@@ -97,6 +97,35 @@ class PrefillSlots(Action):
         ]
 
 
+class ActionVariableTTest(Action):
+    def name(self) -> Text:
+        return "action_variable_ttest"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Access dataframe from the tracker
+        data = tracker.get_slot("data")
+
+        # Get the variable name from the tracker
+        variable_name = tracker.get_slot("variable_name")
+
+        # Call the function to perform t-test
+        p_value, cohens_d, no_2022_q2_data = PLOT_HANDLER.compare_to_past()
+
+        # Construct message based on results
+        if no_2022_q2_data:
+            message = f"There was no data available for 2022 Q2. Comparing 2022 Q1 to 2021 Q2, the p-value of the t-test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
+        else:
+            message = f"Comparing 2022 Q2 to 2022 Q1, the p-value of the t-test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
+
+        # Utter the message
+        dispatcher.utter_message(text=message)
+
+        return []
+
+
 class ActionHelloWorld(Action):
 
     def name(self) -> Text:

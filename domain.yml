@@ -8,6 +8,7 @@ intents:
   - init
   - intent_create_plot
   - request_create_plot_form
+  - intent_askttest
 entities:
   - selected_value
   - plot_type
@@ -70,6 +71,7 @@ actions:
 - action_change_plottype
 - action_change_selectedvalue
 - action_prefill_slots
+- action_variable_ttest
 - utter_submit_create_plot_form
 - action_init
 - utter_greet

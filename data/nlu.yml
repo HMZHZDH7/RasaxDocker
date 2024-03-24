@@ -53,7 +53,7 @@ nlu:
     - I want a plot
     - Create a plot
     - Give me a plot
-    - I want to create a [bar](plot_type) chart depends on [site_country](x) for [age](selected_value)
+    - I want to create a [bar](plot_type) chart for [age](selected_value)
     - Show me a [line](plot_type) plot of [nihss_score](selected_value).
     - Generate a [bar](plot_type) chart based on [door_to_needle](selected_value).
     - Can you create a [line](plot_type) plot for [door_to_groin](selected_value)?
@@ -64,57 +64,179 @@ nlu:
     - I want to see a [bar](plot_type) plot for [sys_blood_pressure](selected_value).
     - Generate a [line](plot_type) graph for [prestroke_mrs](selected_value).
     - Plot a [bar](plot_type) chart for [discharge_mrs](selected_value)
-    - Show me a [line](plot_type) plot of [three_m_mrs](selected_value) for [subject_id](x).
+    - Show me a [line](plot_type) plot of [three_m_mrs](selected_value).
     - Plot a [bar](plot_type) chart for [QI](selected_value).
     - Give me a [line](plot_type) graph for [Value](selected_value)
-    - I want to create a [bar](plot_type) chart based on [imaging_done](x) 
-    - Create a [line](plot_type) plot for [occup_physiotherapy_received](x)
+    - I want to create a [bar](plot_type) chart based on [imaging_done](selected_value) 
+    - Create a [line](plot_type) plot for [occup_physiotherapy_received](selected_value)
     - [bar](plot_type)
     - [age](selected_value)
-    - Plot a [line](plot_type) graph for [site_id](x).
-    - Show me a [bar](plot_type) chart for [YQ](x).
-    - Generate a [line](plot_type) plot for [Value](x) 
-    - Create a [bar](plot_type) chart for [discharge_year](x) 
-    - I want to see a [line](plot_type) plot for [three_m_mrs](selected_value) based on [subject_id](x).
-    - Plot a [bar](plot_type) graph for [occup_physiotherapy_received](x) 
+    - Plot a [line](plot_type) graph for [door to needle time](selected_value).
+    - Show me a [bar](plot_type) chart for [door to groin](selected_value).
+    - Generate a [line](plot_type) plot for [discharge mrs](selected_value) 
+    - Create a [bar](plot_type) chart for [3 month mrs](selected_value) 
+    - I want to see a [line](plot_type) plot for [three_m_mrs](selected_value).
+    - Plot a [bar](plot_type) graph for [occup_physiotherapy_received](selected_value) 
     - [DNT]{"entity": "selected_value", "value": "door_to_needle"} 
     - [DTN]{"entity": "selected_value", "value": "door_to_needle"} 
+    - [door to needle]{"entity": "selected_value", "value": "door_to_needle"}
+    - [door to needle time]{"entity": "selected_value", "value": "door_to_needle"}
+    - [needle time]{"entity": "selected_value", "value": "door_to_needle"}
+    - [NIHSS]{"entity": "selected_value", "value": "nihss_score"}
+    - [NIH Stroke Scale]{"entity": "selected_value", "value": "nihss_score"}
+    - [stroke severity score]{"entity": "selected_value", "value": "nihss_score"}
+    - [neurological assessment score]{"entity": "selected_value", "value": "nihss_score"}
+    - [OTD]{"entity": "selected_value", "value": "onset_to_door"}
+    - [symptom onset to door]{"entity": "selected_value", "value": "onset_to_door"}
+    - [arrival time after symptoms]{"entity": "selected_value", "value": "onset_to_door"}
+    - [time from symptoms to ER]{"entity": "selected_value", "value": "onset_to_door"}
+    - [onset to door]{"entity": "selected_value", "value": "onset_to_door"}
+    - [onset to door time]{"entity": "selected_value", "value": "onset_to_door"}
+    - [discharge NIHSS]{"entity": "selected_value", "value": "discharge_nihss_score"}
+    - [NIH Stroke Scale at discharge]{"entity": "selected_value", "value": "discharge_nihss_score"}
+    - [post-treatment NIHSS]{"entity": "selected_value", "value": "discharge_nihss_score"}
+    - [neurological assessment score at discharge]{"entity": "selected_value", "value": "discharge_nihss_score"}
+    - [blood sugar]{"entity": "selected_value", "value": "glucose"}
+    - [sugar level]{"entity": "selected_value", "value": "glucose"}
+    - [glucose level]{"entity": "selected_value", "value": "glucose"}
+    - [blood glucose concentration]{"entity": "selected_value", "value": "glucose"}
+    - [lipid profile]{"entity": "selected_value", "value": "cholesterol"}
+    - [lipid panel]{"entity": "selected_value", "value": "cholesterol"}
+    - [cholesterol level]{"entity": "selected_value", "value": "cholesterol"}
+    - [lipid concentration]{"entity": "selected_value", "value": "cholesterol"}
+    - [systolic BP]{"entity": "selected_value", "value": "sys_blood_pressure"}
+    - [SBP]{"entity": "selected_value", "value": "sys_blood_pressure"}
+    - [blood pressure (systolic)]{"entity": "selected_value", "value": "sys_blood_pressure"}
+    - [systolic pressure]{"entity": "selected_value", "value": "sys_blood_pressure"}
+    - [pre-stroke mRS]{"entity": "selected_value", "value": "prestroke_mrs"}
+    - [mRS before stroke]{"entity": "selected_value", "value": "prestroke_mrs"}
+    - [modified Rankin Scale before stroke]{"entity": "selected_value", "value": "prestroke_mrs"}
+    - [functional status before stroke]{"entity": "selected_value", "value": "prestroke_mrs"}
+    - [diastolic BP]{"entity": "selected_value", "value": "dis_blood_pressure"}
+    - [DBP]{"entity": "selected_value", "value": "dis_blood_pressure"}
+    - [blood pressure (diastolic)]{"entity": "selected_value", "value": "dis_blood_pressure"}
+    - [diastolic pressure]{"entity": "selected_value", "value": "dis_blood_pressure"}
+    - [perfusion imaging core]{"entity": "selected_value", "value": "perfusion_core"}
+    - [core infarct volume]{"entity": "selected_value", "value": "perfusion_core"}
+    - [perfusion deficit volume]{"entity": "selected_value", "value": "perfusion_core"}
+    - [ischemic core volume]{"entity": "selected_value", "value": "perfusion_core"}
+    - [perfusion core]{"entity": "selected_value", "value": "perfusion_core"}
+    - [hypoperfused tissue volume]{"entity": "selected_value", "value": "hypoperfusion_core"}
+    - [hypoperfused core volume]{"entity": "selected_value", "value": "hypoperfusion_core"}
+    - [tissue at risk volume]{"entity": "selected_value", "value": "hypoperfusion_core"}
+    - [hypoperfusion imaging core]{"entity": "selected_value", "value": "hypoperfusion_core"}
+    - [hemorrhage volume]{"entity": "selected_value", "value": "bleeding_volume_value"}
+    - [bleed volume]{"entity": "selected_value", "value": "bleeding_volume_value"}
+    - [bleeding amount]{"entity": "selected_value", "value": "bleeding_volume_value"}
+    - [hemorrhagic volume]{"entity": "selected_value", "value": "bleeding_volume_value"}
+    - [bleeding volume]{"entity": "selected_value", "value": "bleeding_volume_value"}
+    - [discharge mRS]{"entity": "selected_value", "value": "discharge_mrs"}
+    - [post-stroke mRS]{"entity": "selected_value", "value": "discharge_mrs"}
+    - [modified Rankin Scale at discharge]{"entity": "selected_value", "value": "discharge_mrs"}
+    - [functional status at discharge]{"entity": "selected_value", "value": "discharge_mrs"}
+    - [mrs]{"entity": "selected_value", "value": "discharge_mrs"}
+    - [3-month mRS]{"entity": "selected_value", "value": "three_m_mrs"}
+    - [mRS at 3 months]{"entity": "selected_value", "value": "three_m_mrs"}
+    - [modified Rankin Scale at 3 months]{"entity": "selected_value", "value": "three_m_mrs"}
+    - [functional status at 90 days]{"entity": "selected_value", "value": "three_m_mrs"}
+    - [sex]{"entity": "selected_value", "value": "gender"}
+    - [biological sex]{"entity": "selected_value", "value": "gender"}
+    - [gender identity]{"entity": "selected_value", "value": "gender"}
+    - [patient's sex]{"entity": "selected_value", "value": "gender"}
+    - [stroke occurrence in hospital]{"entity": "selected_value", "value": "hospital_stroke"}
+    - [in-hospital stroke]{"entity": "selected_value", "value": "hospital_stroke"}
+    - [hospital-acquired stroke]{"entity": "selected_value", "value": "hospital_stroke"}
+    - [stroke during hospitalization]{"entity": "selected_value", "value": "hospital_stroke"}
+    - [dysphagia screening performed]{"entity": "selected_value", "value": "dysphagia_screening_done"}
+    - [swallowing assessment done]{"entity": "selected_value", "value": "dysphagia_screening_done"}
+    - [dysphagia screening completed]{"entity": "selected_value", "value": "dysphagia_screening_done"}
+    - [assessment for swallowing done]{"entity": "selected_value", "value": "dysphagia_screening_done"}
+    - [history of ischemic stroke]{"entity": "selected_value", "value": "risk_previous_ischemic_stroke"}
+    - [previous ischemic stroke]{"entity": "selected_value", "value": "risk_previous_ischemic_stroke"}
+    - [ischemic stroke risk factor]{"entity": "selected_value", "value": "risk_previous_ischemic_stroke"}
+    - [ischemic stroke history]{"entity": "selected_value", "value": "risk_previous_ischemic_stroke"}
+    - [history of hemorrhagic stroke]{"entity": "selected_value", "value": "risk_previous_hemorrhagic_stroke"}
+    - [previous hemorrhagic stroke]{"entity": "selected_value", "value": "risk_previous_hemorrhagic_stroke"}
+    - [hemorrhagic stroke risk factor]{"entity": "selected_value", "value": "risk_previous_hemorrhagic_stroke"}
+    - [hemorrhagic stroke history]{"entity": "selected_value", "value": "risk_previous_hemorrhagic_stroke"}
+    - [PT start within 3 days]{"entity": "selected_value", "value": "physiotherapy_start_within_3days"}
+    - [physiotherapy initiation within 72 hours]{"entity": "selected_value", "value": "physiotherapy_start_within_3days"}
+    - [PT started within three days]{"entity": "selected_value", "value": "physiotherapy_start_within_3days"}
+    - [onset of physical therapy within 3 days]{"entity": "selected_value", "value": "physiotherapy_start_within_3days"}
+    - [occupational therapy received]{"entity": "selected_value", "value": "occup_physiotherapy_received"}
+    - [occupational PT given]{"entity": "selected_value", "value": "occup_physiotherapy_received"}
+    - [OT therapy provided]{"entity": "selected_value", "value": "occup_physiotherapy_received"}
+    - [occupation-related physical therapy given]{"entity": "selected_value", "value": "occup_physiotherapy_received"}
+    - [hypertension risk]{"entity": "selected_value", "value": "risk_hypertension"}
+    - [high blood pressure risk]{"entity": "selected_value", "value": "risk_hypertension"}
+    - [risk of hypertension]{"entity": "selected_value", "value": "risk_hypertension"}
+    - [hypertensive risk factor]{"entity": "selected_value", "value": "risk_hypertension"}
+    - [diabetes risk]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [high blood sugar risk]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [risk of diabetes]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [diabetic risk factor]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [diabetes]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [diabetic]{"entity": "selected_value", "value": "risk_diabetes"}
+    - [pre-hospital notification]{"entity": "selected_value", "value": "prenotification"}
+    - [notification before arrival]{"entity": "selected_value", "value": "prenotification"}
+    - [advance notice]{"entity": "selected_value", "value": "prenotification"}
+    - [pre-arrival alert]{"entity": "selected_value", "value": "prenotification"}
+    - [imaging performed]{"entity": "selected_value", "value": "imaging_done"}
+    - [diagnostic imaging done]{"entity": "selected_value", "value": "imaging_done"}
+    - [intracerebral hemorrhage score]{"entity": "selected_value", "value": "ich_score"}
+    - [ICH grading]{"entity": "selected_value", "value": "ich_score"}
+    - [hemorrhage severity score]{"entity": "selected_value", "value": "ich_score"}
+    - [bleeding severity assessment]{"entity": "selected_value", "value": "ich_score"}
+    - [clot-busting therapy]{"entity": "selected_value", "value": "thrombolysis"}
+    - [thrombolytic treatment]{"entity": "selected_value", "value": "thrombolysis"}
+    - [tissue plasminogen activator (tPA) therapy]{"entity": "selected_value", "value": "thrombolysis"}
+    - [fibrinolytic therapy]{"entity": "selected_value", "value": "thrombolysis"}
 
-- lookup: x
-  examples: |
-    - site_country
-    - site_name
-    - site_id
-    - discharge_year
-    - discharge_quarter
-    - YQ
-    - subject_id
-    - QI
-    - Value
-    - discharge_mrs
-    - prenotification
-    - imaging_done
-    - three_m_mrs
-    - gender
-    - occup_physiotherapy_received
-    - dysphagia_screening
-- synonym: site_country
-  examples: |
-    - Hospital country
-    - Geography
-    - Place
 
-- synonym: site_name
+- intent: intent_askttest
   examples: |
-    - Hospital name
-    - Name of the site
-    - Medical center
+    - Compare to past
+    - is the difference real?
+    - ttest
+    - t-test
+    - what is the confidence?
+    - confidence interval
 
-- synonym: site_id
-  examples: |
-    - ID of the site
-    - Facility ID
-    - Location ID
+#- lookup: x
+#  examples: |
+#    - site_country
+#    - site_name
+#    - site_id
+#    - discharge_year
+#    - discharge_quarter
+#    - YQ
+#    - subject_id
+#    - QI
+#    - Value
+#    - discharge_mrs
+#    - prenotification
+#    - imaging_done
+#    - three_m_mrs
+#    - gender
+#    - occup_physiotherapy_received
+#    - dysphagia_screening
+#- synonym: site_country
+#  examples: |
+#    - Hospital country
+#    - Geography
+#    - Place
+
+#- synonym: site_name
+#  examples: |
+#    - Hospital name
+#    - Name of the site
+#    - Medical center
+#
+#- synonym: site_id
+#  examples: |
+#    - ID of the site
+#    - Facility ID
+#    - Location ID
 
 - synonym: discharge_year
   examples: |
@@ -169,21 +291,14 @@ nlu:
     - stroke severity score
     - neurological assessment score
 
-- synonym: door_to_groin
-  examples: |
-    - D2G
-    - D2G time
-    - DTG
-    - DGT
-    - groin puncture time
-    - time to groin intervention
-
 - synonym: onset_to_door
   examples: |
     - OTD
     - symptom onset to door
     - arrival time after symptoms
     - time from symptoms to ER
+    - onset to door
+    - onset to door time
 
 - synonym: discharge_nihss_score
   examples: |

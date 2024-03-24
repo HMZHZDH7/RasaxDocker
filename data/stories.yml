@@ -31,3 +31,8 @@ stories:
 #    - requested_slot: null
 #  - active_loop: null
 #  - action: utter_submit_create_plot_form
+
+- story: Perform t-test on variable
+  steps:
+  - intent: intent_askttest
+  - action: action_variable_ttest

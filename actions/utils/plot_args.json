@@ -2,7 +2,7 @@
   "visualization": {
     "type": "line",
     "title": "",
-    "variable": "door_to_needle",
+    "variable": "discharge_mrs",
     "data": {
       "x": "",
       "y": "",

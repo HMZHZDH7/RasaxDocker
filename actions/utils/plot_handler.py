@@ -12,6 +12,7 @@ import json
 import requests
 import pandas as pd
 import gzip
+from scipy.stats import ttest_ind, t, wilcoxon
 
 class PlotHandler:
     def __init__(self, save_plot=False):
@@ -53,10 +54,10 @@ class PlotHandler:
 
         # Filter the DataFrame to keep only the specified variables
         filtered_dataframe = self.data[self.data['variable'].isin([variable])]
-        filtered_dataframe = filtered_dataframe[filtered_dataframe['site_id'].isin(["Riverside"])]
+        filtered_dataframe = filtered_dataframe[filtered_dataframe['site_id'].isin(["Vitality"])]
 
-        if filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Quantitative' or filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Categorical_binary':
-            filtered_dataframe['Value'] = filtered_dataframe['Value'].astype(float).dropna()
+        #if filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Quantitative' or filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Categorical_binary':
+        filtered_dataframe['Value'] = filtered_dataframe['Value'].astype(float).dropna()
 
         aggregated_dataframe = filtered_dataframe.groupby(['YQ', 'site_id'])['Value'].median().reset_index()
 
@@ -77,120 +78,50 @@ class PlotHandler:
 
         return response
 
-    def plot_timeline(self, x, y, x_label: str = None, y_label: str = None):
-        self._plot_name = "timeline"
 
-        self.change_plot_type(self._plot_name)
+    def compare_to_past(self):
+        with open(self.json_file_path, 'r') as json_file:
+            config = json.load(json_file)
+        var = config['visualization']['variable']
 
-        plot, ax = plt.subplots()
-        if x_label is not None:
-            ax.set_xlabel(x_label)
-        if y_label is not None:
-            ax.set_ylabel(y_label)
-        ax.plot(x, y, marker="o")
-        ax.tick_params(axis="x", rotation=90)
-        for i in range(len(x)):
-            ax.text(x[i], y[i] * 1.05, str(round(y[i])), color='black', fontsize=12, ha='center', va='bottom')
-        plot.subplots_adjust(bottom=0.20)
-        ax.tick_params(axis='both', which='both', color='b', grid_alpha=0.5, grid_linewidth=0.5)
-        if self._save:
-            self._save_plot_to_img(plot)
-        return plot
+        variable_data = self.data[self.data['variable'] == var]
 
-    def plot_distribution(self, x, x_label: str = None, y_label: str = None):
-        self._plot_name = "distribution"
+        variable_data['value'] = pd.to_numeric(variable_data['Value'], errors='coerce')
 
-        self.change_plot_type(self._plot_name)
+        variable_data = variable_data.dropna(subset=['value'])
 
-        if x_label is not None:
-            plt.xlabel(x_label)
-        if y_label is not None:
-            plt.ylabel(y_label)
-        plot = seaborn.kdeplot(x).get_figure()
-        plt.xlim(0, max(x))
-        plt.tick_params(axis='both', which='both', color='b', grid_alpha=0.5, grid_linewidth=0.5)
-        plt.grid(True)
-        if self._save:
-            self._save_plot_to_img(plot)
-        return plot
-
-    def plot_correlation(self, x, y, x_label: str = None, y_label: str = None):
-        self._plot_name = "correlation"
-
-        self.change_plot_type(self._plot_name)
-
-        plot, ax = plt.subplots()
-        if x_label is not None:
-            ax.set_xlabel(x_label)
-        if y_label is not None:
-            ax.set_ylabel(y_label)
-        ax.scatter(x, y)
-        ax.tick_params(axis='both',
-                       which='both',
-                       color='b',
-                       grid_alpha=0.5,
-                       grid_linewidth=0.5)
-        ax.grid(True)
-        if self._save:
-            self._save_plot_to_img(plot)
-        return plot
-
-    def plot_comparison(self, values_list: list, labels_list: list, x_label: str = None, y_label: str = None):
-        self._plot_name = "comparison"
-
-        self.change_plot_type(self._plot_name)
-
-        plot, ax = plt.subplots()
-        if x_label is not None:
-            ax.set_xlabel(x_label)
-        if y_label is not None:
-            ax.set_ylabel(y_label)
-        ax.boxplot(values_list, showfliers=False)
-        ax.tick_params(axis='both', which='both', color='b', grid_alpha=0.5, grid_linewidth=0.5)
-        ax.grid(True)
-        ax.set_xticklabels(labels_list)
-        if self._save:
-            self._save_plot_to_img(plot)
-        return plot
-
-    def plot_regression(self, x, y, regression_type: str = "linear", x_label: str = None, y_label: str = None, polynomial_degree: int = 2):
-        self._plot_name = "regression"
-
-        self.change_plot_type(self._plot_name)
-
-        if regression_type == "linear":
-            model = linear_model.LinearRegression()
-        elif regression_type == "logistic":
-            model = linear_model.LogisticRegression()
-        elif regression_type == "random_forest":
-            model = ensemble.RandomForestRegressor()
+        # Check if there is data for "2022 Q2", if not, compare "2022 Q1" to "2021 Q2"
+        if '2022 Q2' in variable_data['YQ'].values:
+            q2_data = variable_data[variable_data['YQ'] == '2022 Q2']['Value']
+            q1_data = variable_data[variable_data['YQ'] == '2022 Q1']['Value']
         else:
-            raise Exception("ERROR")
+            q2_data = variable_data[variable_data['YQ'] == '2022 Q1']['Value']
+            q1_data = variable_data[variable_data['YQ'] == '2021 Q4']['Value']
 
-        plot, ax = plt.subplots()
-        if x_label is not None:
-            ax.set_xlabel(x_label)
-        if y_label is not None:
-            ax.set_ylabel(y_label)
+        q2_data = pd.to_numeric(q2_data)
+        q1_data = pd.to_numeric(q1_data)
 
-        model.fit(x, y)
-        ax.scatter(x, y)
-        if regression_type == "linear" or "random_forest":
-            ax.plot(x, model.predict(x), color='red', label='Regression')
-        elif regression_type == "logistic":
-            ax.plot(np.sort(x.squeeze()), model.predict_proba(np.sort(x))[:, 1], color='red', label='Regression')
+        min_len = min(len(q1_data), len(q2_data))
+        if len(q1_data) > len(q2_data):
+            q1_data = q1_data.sample(n=min_len, random_state=42)
+        elif len(q2_data) > len(q1_data):
+            q2_data = q2_data.sample(n=min_len, random_state=42)
 
-        if self._save:
-            self._save_plot_to_img(plot)
-        return plot
+        # Perform Wilcoxon signed-rank test
+        _, p_value = wilcoxon(q2_data, q1_data)
 
-    def _save_plot_to_img(self, plot: matplotlib.figure.Figure):
-        plot.savefig(f"{globals.PATH_SAVE_PLOT}/{self._plot_name}_{self._date}.png")
+        # Calculate Cohen's d
+        mean_diff = q2_data.mean() - q1_data.mean()
+        pooled_std = np.sqrt((q1_data.var() + q2_data.var()) / 2)
+        cohens_d = mean_diff / pooled_std
 
-    def _save_plot_to_obj(self, plot: matplotlib.figure.Figure):
-        with open(globals.PATH_SAVE_OBJECT, "wb") as file:
-            pickle.dump(plot, file)
+        print("Group 2 mean: ", q2_data.mean())
+        print("Group 1 mean: ", q1_data.mean())
+        print("Group 2 std: ", q2_data.std())
+        print("Group 1 std: ", q1_data.std())
 
-    def _get_obj_to_plot(self):
-        with open(globals.PATH_SAVE_OBJECT, "rb") as file:
-            return pickle.load(file)
+
+        # Flag to indicate if we did not have data from 2022 Q2
+        no_2022_q2_data = '2022 Q2' not in variable_data['YQ'].values
+
+        return p_value, cohens_d, no_2022_q2_data
