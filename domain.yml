@@ -9,6 +9,7 @@ intents:
   - intent_create_plot
   - request_create_plot_form
   - intent_askttest
+  - intent_askpredictors
 entities:
   - selected_value
   - plot_type
@@ -79,6 +80,7 @@ actions:
 - utter_happy
 - utter_goodbye
 - utter_iamabot
+- action_find_predictors
 
 session_config:
   session_expiration_time: 60

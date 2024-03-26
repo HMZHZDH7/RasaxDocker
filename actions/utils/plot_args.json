@@ -2,7 +2,8 @@
   "visualization": {
     "type": "line",
     "title": "",
-    "variable": "discharge_mrs",
+    "variable": "risk_smoker",
+    "var2": "",
     "data": {
       "x": "",
       "y": "",

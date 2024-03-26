@@ -201,6 +201,16 @@ nlu:
     - t-test
     - what is the confidence?
     - confidence interval
+    
+
+- intent: intent_askpredictors
+  examples: |
+    - What can predict this?
+    - How can I predict this?
+    - What effects this?
+    - How can I improve?
+    - Can you show me what effects this?
+    - Show me the factors that influence this
 
 #- lookup: x
 #  examples: |

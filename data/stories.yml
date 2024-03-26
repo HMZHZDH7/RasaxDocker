@@ -36,3 +36,8 @@ stories:
   steps:
   - intent: intent_askttest
   - action: action_variable_ttest
+
+- story: Find predictors
+  steps:
+  - intent: intent_askpredictors
+  - action: action_find_predictors

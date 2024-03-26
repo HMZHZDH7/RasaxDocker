@@ -126,6 +126,29 @@ class ActionVariableTTest(Action):
         return []
 
 
+class ActionFindPredictors(Action):
+
+    def name(self) -> Text:
+        return "action_find_predictors"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        error, feature_weights = PLOT_HANDLER.find_predictors()
+
+        if error:
+            dispatcher.utter_message(f"Error occurred: {error}")
+        else:
+            # Send feature weights as a response
+            response_message = "Root Mean Squared Error: {}\n".format(feature_weights['Root Mean Squared Error'])
+            response_message += "Feature Importances:\n"
+            for feature, weight in feature_weights['Feature Importances'].items():
+                response_message += "{}: {}\n".format(feature, weight)
+            dispatcher.utter_message(response_message)
+
+        return []
+
 class ActionHelloWorld(Action):
 
     def name(self) -> Text:
