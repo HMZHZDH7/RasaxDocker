@@ -41,3 +41,8 @@ stories:
   steps:
   - intent: intent_askpredictors
   - action: action_find_predictors
+
+- story: Show national value
+  steps:
+  - intent: intent_shownatvalue
+  - action: action_toggle_national_value

@@ -10,9 +10,11 @@ intents:
   - request_create_plot_form
   - intent_askttest
   - intent_askpredictors
+  - intent_shownatvalue
 entities:
   - selected_value
   - plot_type
+  - nat_value
 
 slots:
   plot_type:
@@ -29,11 +31,19 @@ slots:
       - type: from_entity
         entity: selected_value
 
+  nat_value:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: nat_value
+
 forms:
   create_plot_form:
     required_slots:
     - plot_type
     - selected_value
+    - nat_value
 
 responses:
   utter_greet:
@@ -68,11 +78,11 @@ responses:
     - text: "Great! I will create the plot with the specified details. Is there anything else I can help you with?"
 
 actions:
-- ActionHelloWorld
 - action_change_plottype
 - action_change_selectedvalue
 - action_prefill_slots
 - action_variable_ttest
+- action_toggle_national_value
 - utter_submit_create_plot_form
 - action_init
 - utter_greet

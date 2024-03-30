@@ -78,11 +78,32 @@ class ActionChangeSelectedvalue(Action):
 
         PLOT_HANDLER.change_arg("variable", selected_value)
 
-        response = PLOT_HANDLER.edit_data()
+        response = PLOT_HANDLER.edit_data(tracker.get_slot("nat_value"))
         dispatcher.utter_message(text=f"{response}")
 
         return []
 
+
+class ActionToggleNationalValue(Action):
+
+    def name(self) -> Text:
+        return "action_toggle_national_value"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        current_value = tracker.get_slot("nat_value")
+        new_value = not current_value
+
+        PLOT_HANDLER.change_arg("show_nat_val", new_value)
+        response = PLOT_HANDLER.edit_data(new_value)
+
+        dispatcher.utter_message(text=f"{response}")
+
+        dispatcher.utter_message(text="We are {} the national value.".format("showing" if new_value else "hiding"))
+
+        return [SlotSet("nat_value", new_value)]
 
 class PrefillSlots(Action):
     def name(self) -> Text:
@@ -92,8 +113,11 @@ class PrefillSlots(Action):
         # Logic to pre-fill slots
         plot_type = "line"
 
+        nat_value = False
+
         return [
-            SlotSet("plot_type", plot_type)
+            SlotSet("plot_type", plot_type),
+            SlotSet("nat_value", nat_value)
         ]
 
 
@@ -116,9 +140,9 @@ class ActionVariableTTest(Action):
 
         # Construct message based on results
         if no_2022_q2_data:
-            message = f"There was no data available for 2022 Q2. Comparing 2022 Q1 to 2021 Q2, the p-value of the t-test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
+            message = f"There was no data available for 2022 Q2. Comparing 2022 Q1 to 2021 Q2, the p-value of the wilcoxon test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
         else:
-            message = f"Comparing 2022 Q2 to 2022 Q1, the p-value of the t-test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
+            message = f"Comparing 2022 Q2 to 2022 Q1, the p-value of the wilcoxon test is {p_value:.4f}, Cohen's d is {cohens_d:.4f}."
 
         # Utter the message
         dispatcher.utter_message(text=message)
@@ -140,24 +164,17 @@ class ActionFindPredictors(Action):
         if error:
             dispatcher.utter_message(f"Error occurred: {error}")
         else:
-            # Send feature weights as a response
-            response_message = "Root Mean Squared Error: {}\n".format(feature_weights['Root Mean Squared Error'])
-            response_message += "Feature Importances:\n"
-            for feature, weight in feature_weights['Feature Importances'].items():
-                response_message += "{}: {}\n".format(feature, weight)
-            dispatcher.utter_message(response_message)
+            # Round mean error and feature importances
+            mean_error = round(feature_weights['Root Mean Squared Error'], 2)
+            rounded_feature_weights = {feat: round(weight, 2) for feat, weight in
+                                       feature_weights['Feature Importances'].items()}
 
-        return []
-
-class ActionHelloWorld(Action):
-
-    def name(self) -> Text:
-        return "ActionHelloWorld"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        dispatcher.utter_message(text="Here is your INFO")
+            # Format the feature weights as a response
+            dispatcher.utter_message(f"Root Mean Squared Error: {mean_error}")
+            dispatcher.utter_message("\n\nFeature Importances:\n")
+            # Send feature importances as separate messages
+            for feature, weight in rounded_feature_weights.items():
+                dispatcher.utter_message(f"{feature}: {weight}")
 
         return []
 

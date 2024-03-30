@@ -191,6 +191,41 @@ nlu:
     - [thrombolytic treatment]{"entity": "selected_value", "value": "thrombolysis"}
     - [tissue plasminogen activator (tPA) therapy]{"entity": "selected_value", "value": "thrombolysis"}
     - [fibrinolytic therapy]{"entity": "selected_value", "value": "thrombolysis"}
+    - [thrombolysis]{"entity": "selected_value", "value": "thrombolysis"}
+    - [IVT]{"entity": "selected_value", "value": "thrombolysis"}
+    - [number of ivt]{"entity": "selected_value", "value": "thrombolysis"}
+    - [before onset antidiabetics]{"entity": "selected_value", "value": "before_onset_antidiabetics"}
+    - [prior to onset antidiabetic medications]{"entity": "selected_value", "value": "before_onset_antidiabetics"}
+    - [antidiabetic drugs taken before the onset]{"entity": "selected_value", "value": "before_onset_antidiabetics"}
+    - [before onset cilostazol]{"entity": "selected_value", "value": "before_onset_cilostazol"}
+    - [prior to onset of cilostazol]{"entity": "selected_value", "value": "before_onset_cilostazol"}
+    - [cilostazol administered before onset]{"entity": "selected_value", "value": "before_onset_cilostazol"}
+    - [cilostazol]{"entity": "selected_value", "value": "before_onset_cilostazol"}
+    - [before onset clopidrogel]{"entity": "selected_value", "value": "before_onset_clopidrogel"}
+    - [prior to onset of clopidrogel]{"entity": "selected_value", "value": "before_onset_clopidrogel"}
+    - [clopidrogel given before onset]{"entity": "selected_value", "value": "before_onset_clopidrogel"}
+    - [clopidrogel]{"entity": "selected_value", "value": "before_onset_clopidrogel"}
+    - [before onset ticagrelor]{"entity": "selected_value", "value": "before_onset_ticagrelor"}
+    - [prior to onset of ticagrelor]{"entity": "selected_value", "value": "before_onset_ticagrelor"}
+    - [ticagrelor administered before onset]{"entity": "selected_value", "value": "before_onset_ticagrelor"}
+    - [ticagrelor]{"entity": "selected_value", "value": "before_onset_ticagrelor"}
+    - [before onset ticlopidine]{"entity": "selected_value", "value": "before_onset_ticlopidine"}
+    - [prior to onset of ticlopidine]{"entity": "selected_value", "value": "before_onset_ticlopidine"}
+    - [ticlopidine given before onset]{"entity": "selected_value", "value": "before_onset_ticlopidine"}
+    - [ticlopidine]{"entity": "selected_value", "value": "before_onset_ticlopidine"}
+    - [before onset prasugrel]{"entity": "selected_value", "value": "before_onset_prasugrel"}
+    - [prior to onset of prasugrel]{"entity": "selected_value", "value": "before_onset_prasugrel"}
+    - [prasugrel administered before onset]{"entity": "selected_value", "value": "before_onset_prasugrel"}
+    - [prasugrel]{"entity": "selected_value", "value": "before_onset_prasugrel"}
+    - [before onset dipyridamole]{"entity": "selected_value", "value": "before_onset_dipyridamol"}
+    - [prior to onset of dipyridamole]{"entity": "selected_value", "value": "before_onset_dipyridamol"}
+    - [dipyridamole administered before onset]{"entity": "selected_value", "value": "before_onset_dipyridamol"}
+    - [dipyridamole]{"entity": "selected_value", "value": "before_onset_dipyridamol"}
+    - [before onset warfarin]{"entity": "selected_value", "value": "before_onset_warfarin"}
+    - [prior to onset of warfarin]{"entity": "selected_value", "value": "before_onset_warfarin"}
+    - [warfarin administered before onset]{"entity": "selected_value", "value": "before_onset_warfarin"}
+    - [warfarin]{"entity": "selected_value", "value": "before_onset_warfarin"}
+
 
 
 - intent: intent_askttest
@@ -201,6 +236,14 @@ nlu:
     - t-test
     - what is the confidence?
     - confidence interval
+
+- intent: intent_shownatvalue
+  examples: |
+    - Show me the national value
+    - national average
+    - Rest of my country
+    - in all the country
+    - compare me to my country
     
 
 - intent: intent_askpredictors

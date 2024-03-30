@@ -2,8 +2,8 @@
   "visualization": {
     "type": "line",
     "title": "",
-    "variable": "risk_smoker",
-    "var2": "",
+    "variable": "door_to_needle",
+    "show_nat_val": true,
     "data": {
       "x": "",
       "y": "",

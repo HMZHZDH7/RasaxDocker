@@ -49,19 +49,35 @@ class PlotHandler:
         response = requests.post(self.website_url, json=payload)
         return response
 
-    def edit_data(self):
+    def edit_data(self, show_nat_value):
         with open(self.json_file_path, 'r') as json_file:
             config = json.load(json_file)
         variable = config['visualization']['variable']
 
         # Filter the DataFrame to keep only the specified variables
         filtered_dataframe = self.data[self.data['variable'].isin([variable])]
-        filtered_dataframe = filtered_dataframe[filtered_dataframe['site_id'].isin(["Vitality"])]
-
-        #if filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Quantitative' or filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Categorical_binary':
+        #filtered_dataframe = filtered_dataframe[filtered_dataframe['site_id'].isin(["Vitality"])]
         filtered_dataframe['Value'] = filtered_dataframe['Value'].astype(float).dropna()
 
-        aggregated_dataframe = filtered_dataframe.groupby(['YQ', 'site_id'])['Value'].median().reset_index()
+        filtered_dataframe_site = filtered_dataframe[filtered_dataframe['site_id'].isin(["Vitality"])]
+
+        if filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Quantitative' or filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Categorical':
+            aggregated_dataframe = filtered_dataframe_site.groupby(['YQ', 'site_id'])['Value'].median().reset_index()
+        else:
+            aggregated_dataframe = filtered_dataframe_site.groupby(['YQ', 'site_id'])['Value'].mean().reset_index()
+
+        if show_nat_value:
+            filtered_dataframe_country = filtered_dataframe[~filtered_dataframe['site_id'].isin(["Vitality"])]
+
+            if filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Quantitative' or filtered_dataframe['ATTRIBUTE_TYPE'].iloc[0] == 'Categorical':
+                nat_df = filtered_dataframe_country.groupby(['YQ'])['Value'].median().reset_index()
+            else:
+                nat_df = filtered_dataframe_country.groupby(['YQ'])['Value'].mean().reset_index()
+            nat_df = nat_df[['YQ', 'Value']]
+
+            aggregated_dataframe = pd.merge(aggregated_dataframe, nat_df, on='YQ')
+            aggregated_dataframe.rename(columns={'Value_y': 'nat_value'}, inplace=True)
+            aggregated_dataframe.rename(columns={'Value_x': 'Value'}, inplace=True)
 
         json_data = aggregated_dataframe.to_json(orient='records')
 
@@ -209,7 +225,7 @@ class PlotHandler:
         sorted_indices = feature_importances.argsort()[::-1]
         # Print top 10 important features
         feature_weights = {}
-        for i in sorted_indices[:10]:
+        for i in sorted_indices[:5]:
             feature_weights[predictor_variables_filtered[i]] = feature_importances[i]
 
         # Return error (if any) and feature weights
