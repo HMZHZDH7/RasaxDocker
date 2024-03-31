@@ -1,20 +1,14 @@
 import base64
-
-import matplotlib.figure
-import matplotlib.pyplot as plt
 import datetime
-import seaborn
-import pickle
 import numpy as np
-from actions.utils import globals
-from sklearn import linear_model, ensemble
 import json
 import requests
 import pandas as pd
 import gzip
-from scipy.stats import ttest_ind, t, wilcoxon
+from scipy.stats import wilcoxon
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
+import shap
 
 class PlotHandler:
     def __init__(self, save_plot=False):
@@ -178,7 +172,7 @@ class PlotHandler:
 
         # If the target variable is from the "PC" category, print a message and exit
         if target_category == 'PC':
-            error = "The target variable is from the 'PC' category, and it cannot be predicted."
+            error = "The target variable is a patient characteristic, it cannot be predicted."
             return error, None
 
         # Convert non-numeric values in 'Value' column to NaN
@@ -228,5 +222,18 @@ class PlotHandler:
         for i in sorted_indices[:5]:
             feature_weights[predictor_variables_filtered[i]] = feature_importances[i]
 
+        explainer = shap.TreeExplainer(gbr)
+
+        shap_values = explainer.shap_values(X_test)
+
+        mean_shap_values = np.abs(shap_values).mean(axis=0)
+
+        # Get indices of features sorted by importance
+        sorted_indices = np.argsort(mean_shap_values)[::-1][:10]
+
+        shap_values = {}
+        for i in sorted_indices[:10]:
+            shap_values[predictor_variables_filtered[i]] = mean_shap_values[i]
+
         # Return error (if any) and feature weights
-        return None, {'Root Mean Squared Error': accuracy, 'Feature Importances': feature_weights}
+        return None, {'Root Mean Squared Error': accuracy, 'Feature Importances': feature_weights, 'Shap Values': shap_values}

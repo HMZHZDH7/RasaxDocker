@@ -3,7 +3,7 @@
     "type": "line",
     "title": "",
     "variable": "door_to_needle",
-    "show_nat_val": true,
+    "show_nat_val": false,
     "data": {
       "x": "",
       "y": "",

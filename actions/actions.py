@@ -97,6 +97,7 @@ class ActionToggleNationalValue(Action):
         new_value = not current_value
 
         PLOT_HANDLER.change_arg("show_nat_val", new_value)
+        PLOT_HANDLER.send_args()
         response = PLOT_HANDLER.edit_data(new_value)
 
         dispatcher.utter_message(text=f"{response}")
@@ -115,10 +116,30 @@ class PrefillSlots(Action):
 
         nat_value = False
 
+        selected_value = "door_to_needle"
+
         return [
             SlotSet("plot_type", plot_type),
-            SlotSet("nat_value", nat_value)
+            SlotSet("nat_value", nat_value),
+            SlotSet("selected_value", selected_value)
         ]
+
+
+class ActionInitialise(Action):
+    def name(self) -> Text:
+        return "action_initialise"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        selected_value = tracker.get_slot("selected_value")
+        nat_value = tracker.get_slot("nat_value")
+        plot_type = tracker.get_slot("plot_type")
+
+        PLOT_HANDLER.change_arg("type", plot_type)
+        PLOT_HANDLER.change_arg("show_nat_val", nat_value)
+        PLOT_HANDLER.send_args()
+        PLOT_HANDLER.edit_data(selected_value)
+
+        return []
 
 
 class ActionVariableTTest(Action):
@@ -167,14 +188,16 @@ class ActionFindPredictors(Action):
             # Round mean error and feature importances
             mean_error = round(feature_weights['Root Mean Squared Error'], 2)
             rounded_feature_weights = {feat: round(weight, 2) for feat, weight in
-                                       feature_weights['Feature Importances'].items()}
+                                       feature_weights['Shap Values'].items()}
 
             # Format the feature weights as a response
             dispatcher.utter_message(f"Root Mean Squared Error: {mean_error}")
             dispatcher.utter_message("\n\nFeature Importances:\n")
+
+            selected_value = tracker.get_slot("selected_value")
             # Send feature importances as separate messages
             for feature, weight in rounded_feature_weights.items():
-                dispatcher.utter_message(f"{feature}: {weight}")
+                dispatcher.utter_message(f"On average, {feature} increases your {selected_value} by: {weight}")
 
         return []
 
