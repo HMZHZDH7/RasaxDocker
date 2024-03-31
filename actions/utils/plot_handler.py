@@ -138,7 +138,7 @@ class PlotHandler:
 
         return p_value, cohens_d, no_2022_q2_data
 
-    def find_predictors(self):
+    def find_predictors(self, local):
         with open(self.json_file_path, 'r') as json_file:
             config = json.load(json_file)
 
@@ -162,7 +162,8 @@ class PlotHandler:
         # Get the category of the target variable
         target_category = data.loc[data['variable'] == target_variable, 'TAB'].iloc[0]
 
-        data = data[data['site_id'].isin(["Vitality"])]
+        if local:
+            data = data[data['site_id'].isin(["Vitality"])]
         # Filter predictor variables based on the category order
         predictor_variables_filtered = []
         for var in predictor_variables:

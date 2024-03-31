@@ -180,7 +180,38 @@ class ActionFindPredictors(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        error, feature_weights = PLOT_HANDLER.find_predictors()
+        error, feature_weights = PLOT_HANDLER.find_predictors(True)
+
+        if error:
+            dispatcher.utter_message(f"Error occurred: {error}")
+        else:
+            # Round mean error and feature importances
+            mean_error = round(feature_weights['Root Mean Squared Error'], 2)
+            rounded_feature_weights = {feat: round(weight, 2) for feat, weight in
+                                       feature_weights['Shap Values'].items()}
+
+            # Format the feature weights as a response
+            dispatcher.utter_message(f"Root Mean Squared Error: {mean_error}")
+            dispatcher.utter_message("\n\nFeature Importances:\n")
+
+            selected_value = tracker.get_slot("selected_value")
+            # Send feature importances as separate messages
+            for feature, weight in rounded_feature_weights.items():
+                dispatcher.utter_message(f"On average, {feature} increases your {selected_value} by: {weight}")
+
+        return []
+
+
+class ActionFindPredictorsGlobal(Action):
+
+    def name(self) -> Text:
+        return "action_find_predictors_global"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        error, feature_weights = PLOT_HANDLER.find_predictors(False)
 
         if error:
             dispatcher.utter_message(f"Error occurred: {error}")

@@ -77,6 +77,9 @@ responses:
   utter_submit_create_plot_form:
     - text: "Great! I will create the plot with the specified details. Is there anything else I can help you with?"
 
+  utter_ask_local_predictors:
+    - text: "These are based on data from multiple hospitals in your country. Should I perform this analysis only for your hospital?"
+
 actions:
 - action_change_plottype
 - action_change_selectedvalue
@@ -91,6 +94,7 @@ actions:
 - utter_goodbye
 - utter_iamabot
 - action_find_predictors
+- action_find_predictors_global
 - action_initialise
 
 session_config:
