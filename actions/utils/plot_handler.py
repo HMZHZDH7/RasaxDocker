@@ -17,8 +17,8 @@ class PlotHandler:
         self._save = save_plot
         self.json_file_path = "actions/utils/plot_args.json"
         self.json_data_path = "actions/utils/data.json"
-        self.website_url = "http://localhost:3000/rasa-webhook"
-        #self.website_url = "https://dashboards.create.aau.dk/rasa-webhook"
+        #self.website_url = "http://localhost:3000/rasa-webhook"
+        self.website_url = "https://dashboards.create.aau.dk/rasa-webhook"
         self.data = pd.read_csv("actions/utils/dataREanonymized_long.csv")
 
     def change_arg(self, arg, value):
@@ -166,10 +166,12 @@ class PlotHandler:
             data = data[data['site_id'].isin(["Vitality"])]
         # Filter predictor variables based on the category order
         predictor_variables_filtered = []
+        predictor_variables_filtered_names = []
         for var in predictor_variables:
             var_category = data.loc[data['variable'] == var, 'TAB'].iloc[0]
             if category_positions[var_category] < category_positions[target_category]:
                 predictor_variables_filtered.append(var)
+                predictor_variables_filtered_names.append(data.loc[data['variable'] == var, 'INDICATOR'].iloc[0])
 
         # If the target variable is from the "PC" category, print a message and exit
         if target_category == 'PC':
@@ -194,8 +196,11 @@ class PlotHandler:
                 except KeyError:
                     print(f"Skipping variable {var} due to KeyError")
 
-        predictor_variables_filtered = [var for var in predictor_variables_filtered if var in data_wide.columns]
-        print(predictor_variables_filtered)
+        filtered_indices = [i for i, var in enumerate(predictor_variables_filtered) if var in data_wide.columns]
+        predictor_variables_filtered = [predictor_variables_filtered[i] for i in filtered_indices]
+
+        # Remove corresponding indices from predictor_variables_filtered_names
+        predictor_variables_filtered_names = [predictor_variables_filtered_names[i] for i in filtered_indices]
 
         # Split the data into training and testing sets
         X = data_wide[predictor_variables_filtered]
@@ -234,7 +239,7 @@ class PlotHandler:
 
         shap_values = {}
         for i in sorted_indices[:10]:
-            shap_values[predictor_variables_filtered[i]] = mean_shap_values[i]
+            shap_values[predictor_variables_filtered_names[i]] = mean_shap_values[i]
 
         # Return error (if any) and feature weights
         return None, {'Root Mean Squared Error': accuracy, 'Feature Importances': feature_weights, 'Shap Values': shap_values}
