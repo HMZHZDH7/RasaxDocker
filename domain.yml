@@ -11,10 +11,15 @@ intents:
   - intent_askttest
   - intent_askpredictors
   - intent_shownatvalue
+  - both
+  - intent_askeffects
+  - intent_guideline
+
 entities:
   - selected_value
   - plot_type
   - nat_value
+  - real_diff
 
 slots:
   plot_type:
@@ -38,35 +43,33 @@ slots:
       - type: from_entity
         entity: nat_value
 
+  real_diff:
+    type: bool
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: real_diff
+
 forms:
   create_plot_form:
     required_slots:
     - plot_type
     - selected_value
     - nat_value
+    - real_diff
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
+  - text: "Hey! I've started out by showing you your door to needle time since it has been increasing over the past few quarters."
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  utter_new_selected_value:
+    - text: "I can also show you the median value for your country. I can also use some statistical tests to validate if the difference between quarters is real. How should I help?"
 
-  utter_did_that_help:
-  - text: "Did that help you?"
+  utter_ask_statistical_test:
+    - text: "Shall I use some statistical tests to validate if the difference between quarters is real"
 
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
-  utter_info:
-  - text: "fuckin works m8"
+  utter_cause_or_effect:
+    - text: "You can choose to either analyse the cause of this increase or I we can explore how this effects your patients. What shall I do for you?"
 
   utter_ask_plot_type:
     - text: "What type of plot do you want to create?"
@@ -77,8 +80,17 @@ responses:
   utter_submit_create_plot_form:
     - text: "Great! I will create the plot with the specified details. Is there anything else I can help you with?"
 
+  utter_ask_build_model:
+    - text: "Shall I use my A.I. abilities to find some possible causes for this difference? Or would you rather analyse the impact of this change on patient outcomes?"
+
   utter_ask_local_predictors:
-    - text: "These are based on data from multiple hospitals in your country. Should I perform this analysis only for your hospital?"
+    - text: "These are based on data from multiple hospitals in your country. Should I perform this analysis only for your hospital? Otherwise, tell me which indicator you want to explore."
+
+  utter_ask_causes_or_guidelines:
+    - text: "If you like, I can use my A.I. to propose ways to improve patient outcomes. Otherwise, we can look if your hospital meets WSO guidelines."
+
+  #utter_explore_effects:
+  #  - text: "Would you rather look at: mRS at discharge or NIHSS?"
 
 actions:
 - action_change_plottype
@@ -86,16 +98,21 @@ actions:
 - action_prefill_slots
 - action_variable_ttest
 - action_toggle_national_value
+- action_find_predictors
+- action_global_predictions
+- action_initialise
+- action_explore_effects
+- action_dnt_guideline
 - utter_submit_create_plot_form
 - action_init
 - utter_greet
-- utter_did_that_help
-- utter_happy
-- utter_goodbye
-- utter_iamabot
-- action_find_predictors
-- action_find_predictors_global
-- action_initialise
+- utter_cause_or_effect
+- utter_new_selected_value
+- utter_ask_statistical_test
+- utter_ask_build_model
+- utter_ask_causes_or_guidelines
+- action_dysphagia_guideline
+- action_anticoag_guideline
 
 session_config:
   session_expiration_time: 60

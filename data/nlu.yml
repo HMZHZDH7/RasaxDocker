@@ -17,6 +17,21 @@ nlu:
     - goodevening
     - good afternoon
 
+- intent: both
+  examples: |
+    - both
+    - can you do both
+    - Do all of these
+    - all
+    - can you do both please
+    - I want both of these
+    - I need both of these
+    - I need the two of them
+    - two
+    - Give me both options
+    - Can you provide me with both?
+    - I'm interested in both.
+
 - intent: goodbye
   examples: |
     - cu
@@ -38,6 +53,9 @@ nlu:
     - of course
     - that sounds good
     - correct
+    - sure
+    - yes please
+    - do it
 
 - intent: reject
   examples: |
@@ -45,7 +63,7 @@ nlu:
     - never
     - no way
     - not really
-
+    - dont
 
 - intent: intent_create_plot
   examples: |
@@ -232,10 +250,20 @@ nlu:
   examples: |
     - Compare to past
     - is the difference real?
-    - ttest
-    - t-test
+    - wilcoxon test
     - what is the confidence?
     - confidence interval
+    - statistical test
+    - stat
+    - test
+    - Compare quarters
+    - compare
+    - show me if the difference is real
+    - Can you perform a statistical test?
+    - Show me the results of the Wilcoxon test.
+    - What is the significance level?
+    - How confident are you in the results?
+    - Is the difference statistically significant?
 
 - intent: intent_shownatvalue
   examples: |
@@ -254,42 +282,35 @@ nlu:
     - How can I improve?
     - Can you show me what effects this?
     - Show me the factors that influence this
+    - show me the possible causes
+    - causes
+    - show me causes
+    - use your ai
+    - ai
+    - what can cause this
+    - a.i.
+    - How can I enhance performance?
+    - Can you provide insights using AI?
+    - Utilize AI to identify predictors.
+    - Can AI help identify potential causes?
 
-#- lookup: x
-#  examples: |
-#    - site_country
-#    - site_name
-#    - site_id
-#    - discharge_year
-#    - discharge_quarter
-#    - YQ
-#    - subject_id
-#    - QI
-#    - Value
-#    - discharge_mrs
-#    - prenotification
-#    - imaging_done
-#    - three_m_mrs
-#    - gender
-#    - occup_physiotherapy_received
-#    - dysphagia_screening
-#- synonym: site_country
-#  examples: |
-#    - Hospital country
-#    - Geography
-#    - Place
+- intent: intent_askeffects
+  examples: |
+    - How does this impact my patients
+    - impact
+    - effect
+    - How does this effect my patients
+    - show me the effects
+    - explore effects
+    - explore impacts
 
-#- synonym: site_name
-#  examples: |
-#    - Hospital name
-#    - Name of the site
-#    - Medical center
-#
-#- synonym: site_id
-#  examples: |
-#    - ID of the site
-#    - Facility ID
-#    - Location ID
+- intent: intent_guideline
+  examples: |
+    - Lets look at guidelines
+    - guidelines
+    - Show me guidelines
+    - I want to look at guidelines
+    - I want to evaluate my guidelines
 
 - synonym: discharge_year
   examples: |

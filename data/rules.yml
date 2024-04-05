@@ -2,11 +2,6 @@ version: "3.1"
 
 rules:
 
-- rule: initialise
-  steps:
-  - intent: greet
-  - action: action_prefill_slots
-  - action: action_initialise
 
 - rule: activate form loop
   steps:
