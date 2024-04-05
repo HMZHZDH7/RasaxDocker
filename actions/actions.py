@@ -262,7 +262,7 @@ class ActionExploreEffects(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         selected_value = 'discharge_mrs'
-        PLOT_HANDLER.change_arg('type', selected_value)
+        PLOT_HANDLER.change_arg('variable', selected_value)
         PLOT_HANDLER.edit_data(False)
         PLOT_HANDLER.send_args()
 
