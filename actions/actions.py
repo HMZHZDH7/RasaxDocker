@@ -169,11 +169,11 @@ class ActionVariableTTest(Action):
         dispatcher.utter_message(text=message)
 
         if p_value < 0.1:
-            dispatcher.utter_message(text=f"The p-value tells us that there is a {p_value * 100} difference between quarters, which means the difference is likely real.")
+            dispatcher.utter_message(text=f"The p-value tells us that there is a {round(100 - (p_value * 100), 2)} difference between quarters, which means the difference is likely real.")
             dispatcher.utter_message("Shall I use my A.I. abilities to find some possible causes for this difference? Or would you rather analyse the impact of this change on patient outcomes?")
             real_diff = True
         else:
-            dispatcher.utter_message(text=f"The p-value tells us that there is a {p_value * 100} difference between quarters, which means the difference is likely cause by random chance and variance.")
+            dispatcher.utter_message(text=f"The p-value tells us that there is a {round(100 - (p_value * 100), 2)} difference between quarters, which means the difference is likely cause by random chance and variance.")
             dispatcher.utter_message("What variable would you like to explore next?")
             real_diff = False
 
