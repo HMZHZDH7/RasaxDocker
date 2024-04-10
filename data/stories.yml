@@ -8,45 +8,45 @@ stories:
   - action: action_prefill_slots
   - action: action_initialise
   - action: utter_greet
-  - action: utter_new_selected_value
+  #- action: utter_new_selected_value
 
 - story: Initialising with national value
   steps:
-  - action: utter_new_selected_value
+  #- action: utter_new_selected_value
   - intent: intent_shownatvalue
   - action: action_toggle_national_value
-  - action: utter_ask_statistical_test
+  #- action: utter_ask_statistical_test
 
 - story: From nat value to stat test #INCOMPLETE: NEEDS TO LEAD TO DIFFERENT STORIES. ASK TO INVESTIGATE CAUSES BUT ONLY IF THERE IS A CHANGE
   steps:
-  - action: utter_ask_statistical_test
-  - intent: affirm
-  - action: action_variable_ttest
+  #- action: utter_ask_statistical_test
+  #- intent: affirm
+  #- action: action_variable_ttest
 
-- story: From nat value to stat test negative path  #INCOMPLETE: NEEDS TO HANDLE REJECTION
-  steps:
-  - action: utter_ask_statistical_test
-  - intent: reject
+#- story: From nat value to stat test negative path  #INCOMPLETE: NEEDS TO HANDLE REJECTION
+#  steps:
+#  - action: utter_ask_statistical_test
+#  - intent: reject
 
 - story: Initialising with statistical value #INCOMPLETE: NEEDS TO LEAD TO DIFFERENT STORIES. ASK TO INVESTIGATE CAUSES BUT ONLY IF THERE IS A CHANGE
   steps:
-  - action: utter_new_selected_value
+#  - action: utter_new_selected_value
   - intent: intent_askttest
   - action: action_variable_ttest
 
-- story: Initialising both options
-  steps:
-  - action: utter_new_selected_value
-  - intent: both
-  - action: action_toggle_national_value
-  - action: action_variable_ttest
+#- story: Initialising both options
+#  steps:
+#  - action: utter_new_selected_value
+#  - intent: both
+#  - action: action_toggle_national_value
+#  - action: action_variable_ttest
 
 - story: From stat to global prediction
   steps:
   - action: action_variable_ttest
   - intent: intent_askpredictors
   - action: action_global_predictions
-  - action: utter_ask_local_predictors
+  #- action: utter_ask_local_predictors
 
 - story: Find local predictors
   steps:
@@ -65,11 +65,11 @@ stories:
   - intent: intent_askeffects
   - action: action_explore_effects
   - action: action_variable_ttest
-  - action: utter_ask_causes_or_guidelines
+  #- action: utter_ask_causes_or_guidelines
 
 - story: From finding effect to predictors
   steps:
-  - action: utter_ask_causes_or_guidelines
+  #- action: utter_ask_causes_or_guidelines
   - intent: intent_askpredictors
   - action: action_global_predictions
 

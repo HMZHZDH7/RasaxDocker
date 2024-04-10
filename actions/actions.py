@@ -170,11 +170,11 @@ class ActionVariableTTest(Action):
 
         if p_value < 0.1:
             dispatcher.utter_message(text=f"The p-value tells us that there is a {round(100 - (p_value * 100), 2)} difference between quarters, which means the difference is likely real.")
-            dispatcher.utter_message("Shall I use my A.I. abilities to find some possible causes for this difference? Or would you rather analyse the impact of this change on patient outcomes?")
+            #dispatcher.utter_message("Shall I use my A.I. abilities to find some possible causes for this difference? Or would you rather analyse the impact of this change on patient outcomes?")
             real_diff = True
         else:
             dispatcher.utter_message(text=f"The p-value tells us that there is a {round(100 - (p_value * 100), 2)} difference between quarters, which means the difference is likely cause by random chance and variance.")
-            dispatcher.utter_message("What variable would you like to explore next?")
+            #dispatcher.utter_message("What variable would you like to explore next?")
             real_diff = False
 
         return [SlotSet("real_diff", real_diff)]
@@ -212,7 +212,7 @@ class ActionFindPredictors(Action):
             # Send a single message with all features separated by commas
             dispatcher.utter_message(features_str)
 
-            dispatcher.utter_message(f"Would you rather: explore how {selected_value} effects you patients or do you want to explore one of the variables I have listed?")
+            #dispatcher.utter_message(f"Would you rather: explore how {selected_value} effects you patients or do you want to explore one of the variables I have listed?")
 
         return []
 
